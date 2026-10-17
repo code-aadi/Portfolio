@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './Contact.css';
 
-import WhatsAppButton from '../WhatsappButton/WhatsappButton';
+import WhatsAppButton from '../WhatsappButton/WhatsAppButton';
 
 
 
