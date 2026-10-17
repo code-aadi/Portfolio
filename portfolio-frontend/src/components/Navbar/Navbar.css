@@ -1,0 +1,43 @@
+.nav{position:sticky;top:0;z-index:50;background:transparent;transition:background var(--transition-normal),box-shadow var(--transition-normal)}
+.nav.scrolled{background:rgba(247,245,238,.96);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 6px 24px rgba(11,38,56,.08)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:76px;gap:1rem}
+.logo{font:700 1.7rem var(--font-head);letter-spacing:-.04em}.logo span{color:var(--color-orange)}
+
+/* links: align-items:center ensures the active pill is NOT stretched to full navbar height */
+.nav .links{display:flex;align-items:center;gap:.25rem}
+.nav .links a{position:relative;padding:.5rem 1.05rem;border-radius:99px;font-size:.9rem;font-weight:500;line-height:1.2;border:0;transition:background var(--transition-fast),color var(--transition-fast)}
+.nav .links a:hover{background:rgba(30,119,112,.1)}
+.nav .links a.active{background:rgba(30,119,112,.14);color:var(--color-teal);font-weight:700}
+.nav .links a:focus-visible{outline:2px solid var(--color-teal);outline-offset:2px}
+
+/* Desktop: only ONE "Let's Talk" (right side). The in-menu one is hidden.
+   Selectors are prefixed with .nav so index.css .btn { display:inline-flex } cannot override them. */
+.nav .nav-cta-m,.nav .burger{display:none}
+.burger{background:none;border:0;font-size:1.6rem;color:var(--color-dark);cursor:pointer}
+
+
+
+/* Resume button: desktop vs mobile */
+.nav-resume-m {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .nav-resume-d {
+    display: none;
+  }
+  .nav-resume-m {
+    display: block;
+    margin-top: 12px;
+  }
+}
+
+@media(max-width:860px){
+  .nav .nav-cta{display:none}
+  .nav .burger{display:block}
+  .nav .links{position:absolute;top:76px;left:0;right:0;flex-direction:column;align-items:stretch;gap:.2rem;background:var(--color-bg);padding:1rem 1.25rem 1.5rem;box-shadow:0 20px 30px rgba(11,38,56,.1);opacity:0;transform:translateY(-12px);pointer-events:none;transition:var(--transition-normal)}
+  .nav .links.open{opacity:1;transform:none;pointer-events:auto}
+  .nav .links a{padding:.75rem 1rem}
+  .nav .nav-cta-m{display:inline-flex;margin-top:.5rem;justify-content:center}
+}
+

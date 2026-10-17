@@ -1,0 +1,57 @@
+.resume-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-family: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.resume-btn:hover {
+  transform: translateY(-2px);
+}
+
+.resume-btn svg {
+  transition: transform 0.2s ease;
+}
+
+.resume-btn:hover svg {
+  transform: translateY(2px);
+}
+
+/* sizes */
+.resume-btn--md { padding: 16px 32px; font-size: 16px; }
+.resume-btn--sm { padding: 14px 28px; font-size: 16px; }
+
+/* variants */
+.resume-btn--filled {
+  background: #0b2539;
+  color: #fff;
+  border: 2px solid #0b2539;
+}
+
+.resume-btn--outline {
+  background: transparent;
+  color: #0b2539;
+  border: 2px solid #0b2539;
+}
+.resume-btn--outline:hover {
+  background: #0b2539;
+  color: #fff;
+}
+
+.resume-btn--yellow {
+  background: #f2b632;
+  color: #0b2539;
+  border: 2px solid #f2b632;
+}
+
+.resume-btn--xs { padding: 10px 20px; font-size: 15px; }
+.nav .resume-btn--sm {
+  padding: 10px 22px;
+  font-size: 15px;
+}

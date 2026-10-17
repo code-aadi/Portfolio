@@ -1,0 +1,8 @@
+.cgrid{display:grid;grid-template-columns:1fr 1.1fr;gap:3rem;align-items:start}.cgrid p{opacity:.7;margin-top:1rem}
+.cform{display:grid;gap:1rem;background:var(--color-bg);padding:clamp(1.2rem,3vw,2rem);border-radius:var(--radius-lg)}
+.cform label{display:grid;gap:.35rem;font-weight:700;font-size:.85rem}
+.cform input,.cform textarea{font:inherit;padding:.8rem 1rem;border:1.5px solid rgba(11,38,56,.15);border-radius:var(--radius-sm);background:#fff;color:var(--color-dark)}
+.cform input:focus,.cform textarea:focus{outline:2px solid var(--color-teal);border-color:transparent}
+.err{color:#c4361b;font-weight:500}.toast{background:var(--color-teal);color:#fff;padding:.8rem 1rem;border-radius:var(--radius-sm);font-weight:700;animation:pop .35s ease}
+@keyframes pop{from{opacity:0;transform:translateY(8px)}}
+@media(max-width:860px){.cgrid{grid-template-columns:1fr;gap:1.5rem}}
