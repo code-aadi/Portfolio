@@ -1,8 +1,7 @@
-const SITE_URL = "https://your-site.com";
+// Apni deployed site ka URL yahan daalo (bina end ke slash ke)
+const SITE_URL = "https://aditya-kourav.vercel.app";
 const RESUME_URL = `${SITE_URL}/Aditya_Kourav_Resume.pdf`;
-const WHATSAPP_NUMBER = "917828053425";
-const WHATSAPP_MESSAGE = "Hi Aditya, I found your portfolio through Aadi AI and wanted to connect.";
-const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
+const WHATSAPP_URL = "https://wa.me/917828053425";
 
 const portfolioInstructions = `
 
