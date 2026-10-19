@@ -56,18 +56,19 @@ export default function Chatbot() {
     return () => removeEventListener("keydown", k);
   }, []);
 
-  const send = async (q) => {
+   const send = async (q) => {
+    
+    const trimmedQuery = q ? q.trim() : "";
+
+    
+    if (!trimmedQuery || typing) return;
+
+    setMsgs((m) => [...m, { role: "user", text: trimmedQuery, time: now() }]);
+    setText("");
+    setTyping(true);
+
     try {
-      const trimmedQuery = q.trim();
-
-      if (!trimmedQuery || typing) return;
-
-      setMsgs((m) => [...m, { role: "user", text: trimmedQuery, time: now() }]);
-      setText("");
-      setTyping(true);
-
       const r = await getReply(trimmedQuery);
-
       setMsgs((m) => [...m, { role: "ai", text: r, time: now() }]);
     } catch (error) {
       setMsgs((m) => [
@@ -80,9 +81,11 @@ export default function Chatbot() {
         },
       ]);
     } finally {
+      
       setTyping(false);
     }
   };
+
 
   return (
     <>
@@ -150,7 +153,7 @@ export default function Chatbot() {
             </div>
           )}
         </div>
-        <form
+               <form
           onSubmit={(e) => {
             e.preventDefault();
             send(text);
@@ -159,13 +162,15 @@ export default function Chatbot() {
           <input
             value={text}
             onChange={(e) => setText(e.target.value)}
-            placeholder="Ask something..."
+            placeholder={typing ? "Aadi AI is thinking..." : "Ask something..."}
             aria-label="Message"
+            disabled={typing} 
           />
-          <button type="submit" aria-label="Send">
+          <button type="submit" aria-label="Send" disabled={typing || !text.trim()}>
             ➤
           </button>
         </form>
+
       </section>
     </>
   );
