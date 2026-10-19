@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { getReply } from "../../services/chatService";
 import "./Chatbot.css";
-import ReactMarkdown from "react-markdown"
+import ReactMarkdown from "react-markdown";
+
 const WELCOME =
   "Hi! I'm Aadi AI 👋\n\n I'm Aditya's personal AI assistant. Ask me about Aditya's skills, projects, journey, or how we can work together.";
 const chips = [
@@ -19,26 +20,32 @@ export default function Chatbot() {
     [msgs, setMsgs] = useState(init),
     [text, setText] = useState(""),
     [typing, setTyping] = useState(false),
-    end = useRef();
+    logRef = useRef();
+
+  // Sirf chat ka log scroll hoga, poora page nahi
   useEffect(() => {
-    end.current?.scrollIntoView({ behavior: "smooth" });
+    const l = logRef.current;
+    if (l) l.scrollTo({ top: l.scrollHeight, behavior: "smooth" });
   }, [msgs, typing, open]);
+
+  // Mobile keyboard ke hisaab se chat ki height aur position set karo
   useEffect(() => {
-    
     const vv = window.visualViewport,
       mobile = () => innerWidth <= 640;
-    const fit = () =>
-      document.documentElement.style.setProperty(
-        "--vvh",
-        (vv ? vv.height : innerHeight) + "px",
-      );
+    const fit = () => {
+      const s = document.documentElement.style;
+      s.setProperty("--vvh", (vv ? vv.height : innerHeight) + "px");
+      s.setProperty("--vvt", (vv ? vv.offsetTop : 0) + "px");
+    };
     if (!open) return;
     fit();
     vv?.addEventListener("resize", fit);
+    vv?.addEventListener("scroll", fit);
     const prev = document.body.style.overflow;
     if (mobile()) document.body.style.overflow = "hidden";
     return () => {
       vv?.removeEventListener("resize", fit);
+      vv?.removeEventListener("scroll", fit);
       document.body.style.overflow = prev;
     };
   }, [open]);
@@ -49,37 +56,33 @@ export default function Chatbot() {
     return () => removeEventListener("keydown", k);
   }, []);
 
- const send = async (q) => {
-  try {
-    const trimmedQuery = q.trim();
-    
-    if (!trimmedQuery || typing) return;
+  const send = async (q) => {
+    try {
+      const trimmedQuery = q.trim();
 
-    
-    setMsgs((m) => [...m, { role: "user", text: trimmedQuery, time: now() }]);
-    setText("");
-    setTyping(true);
+      if (!trimmedQuery || typing) return;
 
-    
-    const r = await getReply(trimmedQuery);
+      setMsgs((m) => [...m, { role: "user", text: trimmedQuery, time: now() }]);
+      setText("");
+      setTyping(true);
 
-  
-    setMsgs((m) => [...m, { role: "ai", text: r, time: now() }]);
-  } catch (error) {
-     setMsgs((m) => [
-      ...m, 
-      { 
-        role: "ai", 
-        text: error.message || "Sorry, something went wrong. Please try again.", 
-        time: now(), 
-        isError: true 
-      }
-    ]);
-  } finally {
-    
-    setTyping(false);
-  }
-};
+      const r = await getReply(trimmedQuery);
+
+      setMsgs((m) => [...m, { role: "ai", text: r, time: now() }]);
+    } catch (error) {
+      setMsgs((m) => [
+        ...m,
+        {
+          role: "ai",
+          text: error.message || "Sorry, something went wrong. Please try again.",
+          time: now(),
+          isError: true,
+        },
+      ]);
+    } finally {
+      setTyping(false);
+    }
+  };
 
   return (
     <>
@@ -115,18 +118,18 @@ export default function Chatbot() {
             ✕
           </button>
         </header>
-        <div className="log" aria-live="polite">
+        <div className="log" aria-live="polite" ref={logRef}>
           {msgs.map((m, i) => (
             <div key={i} className={`msg ${m.role}`}>
-             <ReactMarkdown
-  components={{
-    a: ({ node, ...props }) => (
-      <a {...props} target="_blank" rel="noopener noreferrer" />
-    ),
-  }}
->
-  {m.text}
-</ReactMarkdown>
+              <ReactMarkdown
+                components={{
+                  a: ({ node, ...props }) => (
+                    <a {...props} target="_blank" rel="noopener noreferrer" />
+                  ),
+                }}
+              >
+                {m.text}
+              </ReactMarkdown>
               <time>{m.time}</time>
             </div>
           ))}
@@ -146,7 +149,6 @@ export default function Chatbot() {
               ))}
             </div>
           )}
-          <div ref={end} />
         </div>
         <form
           onSubmit={(e) => {

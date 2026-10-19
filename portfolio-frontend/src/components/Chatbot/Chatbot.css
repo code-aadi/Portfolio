@@ -266,17 +266,19 @@
 /* Mobile: true full-screen sheet */
 @media(max-width:640px) {
     .chat {
-        inset: 0;
+        inset: auto;
+        left: 0;
         right: 0;
-        bottom: 0;
-        top: 0;
+        top: var(--vvt, 0px);
+        bottom: auto;
         width: 100%;
         max-width: 100%;
         height: var(--vvh, 100dvh);
         border-radius: 0;
         box-shadow: none;
         transform: translateY(100%);
-        transform-origin: bottom
+        transform-origin: bottom;
+        transition: transform .3s ease, opacity .3s ease, visibility .3s
     }
 
     .chat.open {
